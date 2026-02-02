@@ -280,6 +280,12 @@ export class ParticleSystem {
                 } else {
                     next[i][j] = state;
                 }
+
+                // Spontaneous generation!
+                // Small chance for a dead cell to come alive to sustain density
+                if (next[i][j] === 0 && Math.random() < 0.0005) {
+                    next[i][j] = 1;
+                }
             }
         }
         this.golGrid = next;
@@ -393,10 +399,12 @@ export class ParticleSystem {
             this.ctx.restore();
 
             // 3. Fade out
-            this.transitionOpacity -= 0.015; // Tuning for smoothness
-            if (this.transitionOpacity <= 0) {
-                this.state = 'GOL';
-                this.transitionOpacity = 0;
+            // 3. Fade out but STOP at 0.25 to keep it faintly visible
+            if (this.transitionOpacity > 0.25) {
+                this.transitionOpacity -= 0.015;
+            } else {
+                this.transitionOpacity = 0.25;
+                // Stay in this state forever to keep the overlay
             }
         }
 
