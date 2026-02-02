@@ -20,7 +20,9 @@ document.querySelector('#app').innerHTML = `
   </div>
 `;
 
-const system = new ParticleSystem('canvas', '/escher.png');
+import escherUrl from '/escher.png?url';
+
+const system = new ParticleSystem('canvas', escherUrl);
 system.init();
 
 let hasStarted = false;
