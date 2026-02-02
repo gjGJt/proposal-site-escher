@@ -48,7 +48,9 @@ document.addEventListener('click', () => {
     startPrompt.style.opacity = 0;
     setTimeout(() => startPrompt.remove(), 1000);
 
-    system.shatterAndMorphToLine();
+    // system.shatterAndMorphToLine(); // Removed in favor of direct text morph
+
+    system.morphToText("We have progressed to the next level");
 
     setTimeout(() => {
       system.morphToText("Will you be my girlfriend?");
@@ -56,8 +58,8 @@ document.addEventListener('click', () => {
         uiLayer.classList.remove('hidden');
         uiLayer.classList.add('active');
         input.focus();
-      }, 2500);
-    }, 2000);
+      }, 2500); // Wait for particles to settle
+    }, 3500); // Read time for first message
   }
 });
 

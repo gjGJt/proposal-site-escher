@@ -131,8 +131,17 @@ export class ParticleSystem {
     }
 
     morphToText(text) {
+        this.state = 'PARTICLE_ANIMATION';
         this.ctx.clearRect(0, 0, this.width, this.height);
-        this.ctx.font = '50px "Cinzel"';
+
+        // Dynamic Font Scaling
+        let fontSize = 50;
+        this.ctx.font = `${fontSize}px "Cinzel"`;
+        while (this.ctx.measureText(text).width > this.width * 0.9 && fontSize > 10) {
+            fontSize -= 2;
+            this.ctx.font = `${fontSize}px "Cinzel"`;
+        }
+
         this.ctx.fillStyle = 'white';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
