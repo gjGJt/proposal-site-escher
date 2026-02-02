@@ -15,6 +15,7 @@ export class ParticleSystem {
         this.cellSize = 4;
         this.isGolRunning = false;
         this.frameCount = 0;
+        this.transitionOpacity = 1.0; // For smooth fading between states
 
         // Heart animation vars
         this.heartScale = 1;
@@ -215,7 +216,8 @@ export class ParticleSystem {
     }
 
     disintegrateToGoL() {
-        this.state = 'GOL';
+        this.state = 'TRANSITION_TO_GOL';
+        this.transitionOpacity = 1.0;
         this.initGoL();
     }
 
@@ -301,9 +303,9 @@ export class ParticleSystem {
     drawGoL() {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
-        // Add Glow for beauty
-        this.ctx.shadowBlur = 10;
-        this.ctx.shadowColor = '#ff3366';
+        // Add Glow for beauty - REMOVED for performance, handled by CSS
+        // this.ctx.shadowBlur = 10;
+        // this.ctx.shadowColor = '#ff3366';
         this.ctx.fillStyle = '#ff3366';
 
         for (let i = 0; i < this.cols; i++) {
@@ -314,7 +316,7 @@ export class ParticleSystem {
             }
         }
 
-        this.ctx.shadowBlur = 0;
+        // this.ctx.shadowBlur = 0;
     }
 
     updateIdle() {
@@ -349,8 +351,8 @@ export class ParticleSystem {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         if (useGlow) {
-            this.ctx.shadowBlur = 5;
-            this.ctx.shadowColor = 'rgba(255,255,255,0.5)';
+            // this.ctx.shadowBlur = 5;
+            // this.ctx.shadowColor = 'rgba(255,255,255,0.5)';
         }
 
         this.particles.forEach(p => {
@@ -358,7 +360,7 @@ export class ParticleSystem {
             this.ctx.fillRect(p.x, p.y, p.size, p.size);
         });
 
-        this.ctx.shadowBlur = 0;
+        // this.ctx.shadowBlur = 0;
     }
 
     animate() {
@@ -373,9 +375,26 @@ export class ParticleSystem {
         } else if (this.state === 'GOL') {
             if (this.frameCount % 10 === 0) this.updateGoL();
             this.drawGoL();
-        } else {
             this.update();
             this.draw();
+        } else if (this.state === 'TRANSITION_TO_GOL') {
+            // 1. Update and Draw GoL (Background)
+            if (this.frameCount % 10 === 0) this.updateGoL();
+            this.drawGoL();
+
+            // 2. Draw Heart on top with fade
+            this.ctx.save();
+            this.ctx.globalAlpha = this.transitionOpacity;
+            this.updateHeart(); // Keep heart beating while fading
+            this.draw(false); // Draw particles without extra glow logic
+            this.ctx.restore();
+
+            // 3. Fade out
+            this.transitionOpacity -= 0.015; // Tuning for smoothness
+            if (this.transitionOpacity <= 0) {
+                this.state = 'GOL';
+                this.transitionOpacity = 0;
+            }
         }
 
         requestAnimationFrame(() => this.animate());
