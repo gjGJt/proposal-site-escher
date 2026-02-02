@@ -30,8 +30,8 @@ export class ParticleSystem {
             // Re-init if resizing in early states to keep image centered
             if (this.state === 'IDLE_PARTICLES' && this.image) {
                 this.processImageAndCreateParticles();
-            } else if (this.state === 'GOL') {
-                this.initGoL();
+            } else if (this.state === 'GOL' || this.state === 'TRANSITION_TO_GOL') {
+                this.initGoL(); // Handle resize during GoL or transition
             }
         });
 
@@ -245,7 +245,8 @@ export class ParticleSystem {
         for (let i = 0; i < this.cols; i++) {
             for (let j = 0; j < this.rows; j++) {
                 // Don't overwrite heart seeds, but fill empty space
-                if (this.golGrid[i][j] === 0 && Math.random() < 0.35) {
+                // Increased density slightly to 0.40 for better visibility
+                if (this.golGrid[i][j] === 0 && Math.random() < 0.40) {
                     this.golGrid[i][j] = 1;
                 }
             }
@@ -347,8 +348,10 @@ export class ParticleSystem {
         });
     }
 
-    draw(useGlow = false) {
-        this.ctx.clearRect(0, 0, this.width, this.height);
+    draw(useGlow = false, clear = true) {
+        if (clear) {
+            this.ctx.clearRect(0, 0, this.width, this.height);
+        }
 
         if (useGlow) {
             // this.ctx.shadowBlur = 5;
@@ -386,7 +389,7 @@ export class ParticleSystem {
             this.ctx.save();
             this.ctx.globalAlpha = this.transitionOpacity;
             this.updateHeart(); // Keep heart beating while fading
-            this.draw(false); // Draw particles without extra glow logic
+            this.draw(false, false); // Draw particles without extra glow, AND DO NOT CLEAR
             this.ctx.restore();
 
             // 3. Fade out
