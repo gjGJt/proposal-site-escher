@@ -3,8 +3,10 @@
   --text-color: #ffffff;
   --accent-color: #e0e0e0;
   --error-color: #ff6b6b;
-  --font-serif: 'Cinzel', serif;
-  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Cinzel',
+    serif;
+  --font-sans: 'Inter',
+    sans-serif;
 }
 
 * {

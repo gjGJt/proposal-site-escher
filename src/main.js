@@ -4,7 +4,7 @@ import { ParticleSystem } from './ParticleSystem.js';
 document.querySelector('#app').innerHTML = `
   <canvas id="canvas"></canvas>
   <div id="start-prompt" class="fade-in">
-    <p>Click Anywhere to Begin</p>
+    <p>Loading...</p>
   </div>
   
   <div id="ui-layer" class="hidden">
@@ -23,17 +23,27 @@ document.querySelector('#app').innerHTML = `
 import escherUrl from '/escher.png?url';
 
 const system = new ParticleSystem('canvas', escherUrl);
-system.init();
+// Initialize system and wait for assets
+try {
+  await system.init();
+} catch (e) {
+  console.error("Failed to load assets", e);
+}
 
 let hasStarted = false;
+let isReady = true;
+
 const startPrompt = document.getElementById('start-prompt');
 const uiLayer = document.getElementById('ui-layer');
 const input = document.getElementById('answer-input');
 const errorMsg = document.getElementById('error-message');
 const successLayer = document.getElementById('success-layer');
 
+// Update prompt when ready
+startPrompt.querySelector('p').innerText = "Click Anywhere to Begin";
+
 document.addEventListener('click', () => {
-  if (!hasStarted) {
+  if (isReady && !hasStarted) {
     hasStarted = true;
     startPrompt.style.opacity = 0;
     setTimeout(() => startPrompt.remove(), 1000);
