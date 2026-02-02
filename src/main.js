@@ -14,10 +14,7 @@ document.querySelector('#app').innerHTML = `
     </div>
   </div>
 
-  <div id="success-layer" class="hidden">
-    <!-- Success text updated per user request -->
-    <h1 class="fade-in-slow">we have progressed to the next level</h1>
-  </div>
+  <div id="success-layer" class="hidden"></div>
 `;
 
 import escherUrl from '/escher.png?url';
