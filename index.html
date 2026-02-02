@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/proposal-site-escher/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>A Question</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/proposal-site-escher/assets/index-B-jD0sj9.js"></script>
-    <link rel="stylesheet" crossorigin href="/proposal-site-escher/assets/index-dqF-CGsi.css">
-  </head>
-  <body>
-    <div id="app">
-      <canvas id="canvas"></canvas>
-      
-      <div id="ui-layer" class="hidden">
-        <div id="input-container" class="fade-in">
-          <input type="text" id="answer-input" placeholder="Type your answer..." autocomplete="off" />
-          <p id="error-message" class="error-text hidden"></p>
-        </div>
-      </div>
 
-      <div id="success-layer" class="hidden">
-        <h1 class="fade-in-slow">Congratulations</h1>
-        <p class="fade-in-slower">You have progressed to the next level.</p>
-      </div>
-      
-      <div id="start-prompt" class="fade-in">
-        <p>Click to begin</p>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/proposal-site-escher/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Question</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <script type="module" crossorigin src="/proposal-site-escher/assets/index-DRg_jOep.js"></script>
+  <link rel="stylesheet" crossorigin href="/proposal-site-escher/assets/index-dqF-CGsi.css">
+</head>
+
+<body>
+  <div id="app">
+    <canvas id="canvas"></canvas>
+
+    <div id="ui-layer" class="hidden">
+      <div id="input-container" class="fade-in">
+        <input type="text" id="answer-input" placeholder="Type your answer..." autocomplete="off" />
+        <p id="error-message" class="error-text hidden"></p>
       </div>
     </div>
-  </body>
+
+    <div id="success-layer" class="hidden">
+    </div>
+
+    <div id="start-prompt" class="fade-in">
+      <p>Click to begin</p>
+    </div>
+  </div>
+</body>
+
 </html>
