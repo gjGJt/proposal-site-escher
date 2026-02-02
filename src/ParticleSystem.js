@@ -163,7 +163,7 @@ export class ParticleSystem {
                 p.targetX = textPoints[i].x;
                 p.targetY = textPoints[i].y;
                 p.color = 'white';
-                p.ease = 0.1;
+                p.ease = 0.04;
             } else {
                 p.targetX = Math.random() * this.width;
                 p.targetY = this.height + 100;

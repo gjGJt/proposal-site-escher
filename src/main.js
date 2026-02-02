@@ -48,18 +48,14 @@ document.addEventListener('click', () => {
     startPrompt.style.opacity = 0;
     setTimeout(() => startPrompt.remove(), 1000);
 
-    // system.shatterAndMorphToLine(); // Removed in favor of direct text morph
-
-    system.morphToText("We have progressed to the next level");
+    // Intro Sequence: Escher -> "Will you be my girlfriend?"
+    system.morphToText("Will you be my girlfriend?");
 
     setTimeout(() => {
-      system.morphToText("Will you be my girlfriend?");
-      setTimeout(() => {
-        uiLayer.classList.remove('hidden');
-        uiLayer.classList.add('active');
-        input.focus();
-      }, 2500); // Wait for particles to settle
-    }, 3500); // Read time for first message
+      uiLayer.classList.remove('hidden');
+      uiLayer.classList.add('active');
+      input.focus();
+    }, 4000); // 4s for slower, majestic morph
   }
 });
 
@@ -74,17 +70,18 @@ input.addEventListener('keydown', (e) => {
       // 1. Hide UI
       uiLayer.classList.add('hidden');
 
-      // 2. Morph to Heart
-      system.morphToHeart();
+      // 2. Morph to "We have progressed..."
+      system.morphToText("We have progressed to the next level");
 
-      // 3. Wait/Beat for ~4 seconds then Disintegrate -> GOL
+      // 3. Wait, then Morph to Heart
       setTimeout(() => {
-        system.disintegrateToGoL();
-        // Show text essentially at same time or slightly after
+        system.morphToHeart();
+
+        // 4. Wait/Beat for ~4 seconds then Disintegrate -> GOL
         setTimeout(() => {
-          successLayer.classList.remove('hidden');
-        }, 500);
-      }, 4000);
+          system.disintegrateToGoL();
+        }, 4000);
+      }, 3000);
 
     } else {
       errorMsg.classList.add('show');
